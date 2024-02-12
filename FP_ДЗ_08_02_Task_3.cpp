@@ -33,6 +33,7 @@ void FillDaysInMonth(int year)
 {
     for (int i = 1; i <= CalendarSize; i++)
     {
+        // Формула расчёта дней в году
         int daysInMonth = 28 + (i + i / 8) % 2 + 2 % i + 2 * (1 / i);
 
         if (i == 2 && IsLeapYear(year))
@@ -61,6 +62,25 @@ void CalcProfitPerMonth(double totalProfit)
 }
 
 
+void MaxProfit(int monthStart, int monthEnd)
+{
+    int start = monthStart == 0 ? 1 : monthStart;
+    int finish = monthEnd > 12 ? 12 : monthEnd;
+    int maxProfitMonth = 0;
+    double maxProfit = ProfitsPerMonth[start];
+    for (int i = start; i <= finish; i++)
+    {
+        if (ProfitsPerMonth[i] > maxProfit) 
+        {
+            maxProfit = ProfitsPerMonth[i];
+            maxProfitMonth = i;
+        }
+            
+    }
+
+    cout << "Максимальная прибыль была в " << maxProfitMonth << " месяце" << " составила : " << maxProfit << " денег " << endl;
+}
+
 int main()
 {
     SetConsoleCP(1251);
@@ -85,5 +105,6 @@ int main()
     cin >> monthEnd;
 
 
+    MaxProfit(monthStart, monthEnd);
 }
 
