@@ -64,11 +64,9 @@ void CalcProfitPerMonth(double totalProfit)
 
 void MaxProfit(int monthStart, int monthEnd)
 {
-    int start = monthStart == 0 ? 1 : monthStart;
-    int finish = monthEnd > 12 ? 12 : monthEnd;
-    int maxProfitMonth = 0;
-    double maxProfit = ProfitsPerMonth[start];
-    for (int i = start; i <= finish; i++)
+    int maxProfitMonth = monthStart;
+    double maxProfit = ProfitsPerMonth[monthStart];
+    for (int i = monthStart; i <= monthEnd; i++)
     {
         if (ProfitsPerMonth[i] > maxProfit) 
         {
@@ -79,6 +77,23 @@ void MaxProfit(int monthStart, int monthEnd)
     }
 
     cout << "Максимальная прибыль была в " << maxProfitMonth << " месяце" << " составила : " << maxProfit << " денег " << endl;
+}
+
+void MinProfit(int monthStart, int monthEnd)
+{
+    int minProfitMonth = monthStart;
+    double minProfit = ProfitsPerMonth[monthStart];
+    for (int i = monthStart; i <= monthEnd; i++)
+    {
+        if (ProfitsPerMonth[i] < minProfit)
+        {
+            minProfit = ProfitsPerMonth[i];
+            minProfitMonth = i;
+        }
+
+    }
+
+    cout << "Минимальная прибыль была в " << minProfitMonth << " месяце" << " составила : " << minProfit << " денег " << endl;
 }
 
 int main()
@@ -105,6 +120,8 @@ int main()
     cin >> monthEnd;
 
 
+    MinProfit(monthStart, monthEnd);
     MaxProfit(monthStart, monthEnd);
+    
 }
 
