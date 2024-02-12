@@ -61,39 +61,46 @@ void CalcProfitPerMonth(double totalProfit)
         ProfitsPerMonth[i] = totalProfit * (static_cast<double>(Calendar[i]) / totalDaysInYear);
 }
 
-
-void MaxProfit(int monthStart, int monthEnd)
+/// <summary>
+/// Общий метод для подсчёта и вывода максимального и минимального дохода
+/// </summary>
+void FindProfit(bool findMax, int monthStart, int monthEnd)
 {
-    int maxProfitMonth = monthStart;
-    double maxProfit = ProfitsPerMonth[monthStart];
-    for (int i = monthStart; i <= monthEnd; i++)
+    int extProfitMonth = monthStart;
+    double extProfit = ProfitsPerMonth[monthStart];
+
+    for (int i = monthStart + 1; i <= monthEnd; i++)
     {
-        if (ProfitsPerMonth[i] > maxProfit) 
+        if ((findMax && ProfitsPerMonth[i] > extProfit) || (!findMax && ProfitsPerMonth[i] < extProfit))
         {
-            maxProfit = ProfitsPerMonth[i];
-            maxProfitMonth = i;
+            extProfit = ProfitsPerMonth[i];
+            extProfitMonth = i;
         }
-            
     }
 
-    cout << "Максимальная прибыль была в " << maxProfitMonth << " месяце" << " составила : " << maxProfit << " денег " << endl;
+    std::cout << (findMax ? "Максимальная" : "Минимальная") << " прибыль была в " << extProfitMonth
+        << " месяце" << " составила: " << extProfit << " денег " << std::endl;
 }
 
+/// <summary>
+/// Показывает максимальную выручку в указанном диапазоне и месяц
+/// </summary>
+/// <param name="monthStart">Начало диапазона</param>
+/// <param name="monthEnd">Конец диапазона</param>
+void MaxProfit(int monthStart, int monthEnd)
+{
+    FindProfit(true, monthStart, monthEnd);
+}
+
+
+/// <summary>
+/// Показывает минимальную выручку в указанном диапазоне и месяц
+/// </summary>
+/// <param name="monthStart">Начало диапазона</param>
+/// <param name="monthEnd">Конец диапазона</param>
 void MinProfit(int monthStart, int monthEnd)
 {
-    int minProfitMonth = monthStart;
-    double minProfit = ProfitsPerMonth[monthStart];
-    for (int i = monthStart; i <= monthEnd; i++)
-    {
-        if (ProfitsPerMonth[i] < minProfit)
-        {
-            minProfit = ProfitsPerMonth[i];
-            minProfitMonth = i;
-        }
-
-    }
-
-    cout << "Минимальная прибыль была в " << minProfitMonth << " месяце" << " составила : " << minProfit << " денег " << endl;
+    FindProfit(false, monthStart, monthEnd);
 }
 
 int main()
@@ -121,7 +128,6 @@ int main()
 
 
     MinProfit(monthStart, monthEnd);
-    MaxProfit(monthStart, monthEnd);
-    
+    MaxProfit(monthStart, monthEnd);    
 }
 
