@@ -10,6 +10,8 @@ using namespace std;
 
 const int CalendarSize = 12;
 int Calendar[CalendarSize];
+double ProfitsPerMonth[CalendarSize];
+
 
 /// <summary>
 /// Метод проверки високосного года
@@ -36,25 +38,28 @@ void FillDaysInMonth(int year)
         if (i == 2 && IsLeapYear(year))
             daysInMonth++;
 
-        Calendar[i] = daysInMonth;
+        Calendar[i - 1] = daysInMonth;
     }
 }
 
-double CalcMinProfit() {
 
-}
-
-double CalcMaxProfit(int monthStart, int monthEnd)
+/// <summary>
+/// Метод расчёта прибыли по месяцам
+/// </summary>
+/// <param name="totalProfit">Заполняет массив</param>
+void CalcProfitPerMonth(double totalProfit)
 {
-    double result = 0;
-    int minDays = Calendar[monthStart];
-    for (int i = monthStart; i <= monthEnd; i++)
-    {
-        if (Calendar[i] < minDays)
-            minDays = Calendar[i];
+    int totalDaysInYear = 0;
 
-    }
+    // Получаю общее количество дней в году
+    for (int i = 0; i < CalendarSize; i++)
+        totalDaysInYear += Calendar[i];
+
+    // Распределяю прибыль по месяцам
+    for (int i = 0; i < CalendarSize; i++)
+        ProfitsPerMonth[i] = totalProfit * (static_cast<double>(Calendar[i]) / totalDaysInYear);
 }
+
 
 int main()
 {
@@ -65,6 +70,7 @@ int main()
     int year = 0, monthStart = 0, monthEnd =0;
 
     FillDaysInMonth(2023);
+    CalcProfitPerMonth(300000);
 
     cout << "Калькулятор расчёта прибыли за указанный период в году. " << endl
          << + "Будет рассчитана максимальная и минимальная прибыль за указанный период\n";
